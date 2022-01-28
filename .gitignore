@@ -1,0 +1,9 @@
+/.vscode
+
+/.aws-sam
+/samconfig.toml
+
+/.env*
+
+/.python-version
+__pycache__/

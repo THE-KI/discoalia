@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Discolia
+
+Globals:
+  Function:
+    Timeout: 5
+
+Parameters:
+  ApplicationPublicKey:
+    Description: Discord Application Public Key
+    Type: String
+
+Resources:
+  SlashCommandsCallbackFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: .
+      Handler: handler.callback
+      Runtime: python3.8
+      Events:
+        HelloWorld:
+          Type: HttpApi # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /callback
+            Method: POST
+      Environment:
+        Variables:
+          APPLICATION_PUBLIC_KEY: !Ref ApplicationPublicKey
+
+Outputs:
+  CallbackAPIEndpoint:
+    Description: "API Gateway endpoint URL"
+    Value: !Sub "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/callback"
