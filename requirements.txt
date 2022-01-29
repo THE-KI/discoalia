@@ -1,1 +1,4 @@
 pynacl
+pytest
+pytest-mock
+black
