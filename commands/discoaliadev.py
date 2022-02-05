@@ -1,6 +1,10 @@
 import random
 import re
 
+"""
+今のコマンドに影響を与えず開発するためのデバッグコマンド。
+git管理するとこれの差分出るのすごい恥ずかしいね。pushはするけど今後addしないと思う
+"""
 
 CANDIDATES = ["H", "A", "D", "S", "sword"]
 M10_SWORDS = [
@@ -67,7 +71,7 @@ def exec(user_name: str):
 
     if not verify_aizawa(agi, swords):
         # print("detected aizawa. " + expression)
-        expression = exec(user_name)
+        expression = exec()
 
     return expression
 
@@ -118,4 +122,4 @@ def remove_limited(agi: int, swords):
 
 
 if __name__ == "__main__":
-    print(exec("name"))
+    print(exec("あああ/いいい/ううう"))
