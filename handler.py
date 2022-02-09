@@ -1,6 +1,6 @@
 import json
 import os
-from commands import m10randomizer, discoaliadev
+from commands import m10randomizer, discoaliadev, phprandomizer
 
 from nacl.signing import VerifyKey
 
@@ -42,16 +42,23 @@ def callback(event: dict, context: dict):
         return {"type": 1}  # InteractionResponseType.Pong
     elif req["type"] == 2:  # InteractionType.ApplicationCommand
         cmd = req["data"]["name"]
+        opts = (
+            {v["name"]: v["value"] for v in req["data"]["options"]}
+            if "options" in req["data"]
+            else {}
+        )
 
+        executor_name = req["member"]["nick"] or req["member"]["user"]["username"]
         if "discoaliadev" in cmd:
             print(req)
-            executor_name = req["member"]["nick"] or req["member"]["user"]["username"]
             print(executor_name)
             text = discoaliadev.exec(executor_name)
 
         if "m10randomizer" in cmd:
-            executor_name = req["member"]["nick"] or req["member"]["user"]["username"]
             text = m10randomizer.exec(executor_name)
+
+        if "phprandomizer" in cmd:
+            text = phprandomizer.exec(opts["room_id"], executor_name)
 
         return {
             "type": 4,  # InteractionResponseType.ChannelMessageWithSource

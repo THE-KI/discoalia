@@ -2,3 +2,5 @@ pynacl
 pytest
 pytest-mock
 black
+bs4
+requests
